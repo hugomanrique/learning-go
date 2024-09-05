@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 func main() {
-	structs()
+	pointers()
 	// var matriz = [...]int{10,20,30,40} // when no know the length of array, use this
 
 	// for i:=0; i<len(matriz); i++ {
@@ -74,7 +74,37 @@ type Person struct {
 	Age int
 	Email string
 }
+func (p *Person) diHola(){
+	fmt.Println("Hola",p.Name)
+}
+
 
 func structs(){
-	
+	var person Person
+	person.Name = "Hugo"
+	person.Age = 25
+	person.Email = "hugo@manrique.com"
+
+	anotherPerson := Person{
+		Name: "Hugo",
+		Age: 25,
+		Email: "hugo@manrique.com",
+	}
+	fmt.Println(person,anotherPerson)
+}
+
+
+func pointers(){
+	var x int = 10
+	var p *int = &x
+	// editPointers(&x)
+	fmt.Println(x)
+	fmt.Println(p)
+
+	person :=Person{ Name: "Hugo" , Age: 25, Email: "hugo@manrique.com"}
+	person.diHola()
+}
+
+func editPointers(x *int){
+	*x = 20
 }
