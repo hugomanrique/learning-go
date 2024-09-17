@@ -1,1 +1,1 @@
-Hugo is a static site generator written in Go.
+Hello this is a page static
