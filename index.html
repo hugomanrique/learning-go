@@ -11,22 +11,60 @@
       crossorigin="anonymous"
     />
     <style type="text/css">
+      body {
+        background: rgb(0, 0, 0);
+        background: linear-gradient(
+          0deg,
+          rgb(0, 0, 0) 15%,
+          rgba(0, 0, 0, 1) 100%
+        );
+      }
       .container {
-        background: linear-gradient(45deg, #000000, #003f18, #6b0012);
-        background-size: 400% 400%;
-        animation: gradientBackground 6s ease infinite;
         color: white;
         font-family: Arial, sans-serif;
         display: flex;
       }
 
+      .top-row-scores {
+        display: flex;
+        flex-direction: row;
+        height: 30%;
+      }
+
+      .bottom-row-actions {
+        display: flex;
+        flex-direction: row;
+        height: 70%;
+      }
+
+      .actions-left {
+        display: flex;
+        flex: 0 0 20%;
+      }
+
+      .actions-center {
+        display: flex;
+        flex: 0 0 60%;
+        background-color: #000;
+      }
+
+      .actions-right {
+        display: flex;
+        flex: 0 0 20%;
+        background-color: rgb(255, 221, 25);
+      }
+
       .column-left {
-        flex: 0 0 40%; /* La primera columna ocupa el 95% del ancho */
+        flex: 0 0 50%; /* La primera columna ocupa el 95% del ancho */
         display: flex;
         flex-direction: column;
-        border: 0.5rem solid white;
-        background-color: lightblue;
+        background-color: rgb(196, 240, 255);
         color: #000000;
+        position: relative;
+        border-right: 2px solid #000;
+        border-top: 8px solid #000;
+        border-bottom: 8px solid #000;
+        border-radius: 0 0 20px 20px;
       }
 
       .column-center {
@@ -51,12 +89,25 @@
       }
 
       .column-right {
-        flex: 0 0 40%; /* La segunda columna ocupa el 5% del ancho */
+        flex: 0 0 50%; /* La segunda columna ocupa el 5% del ancho */
         display: flex;
         background-color: none;
         justify-content: center;
         flex-direction: column;
-        border: 0.5rem solid white;
+        background-color: orange;
+        border-top: 8px solid #000;
+        border-left: 2px solid #000;
+        border-bottom: 8px solid #000;
+        border-radius: 0 0 20px 20px;
+      }
+
+      .column-right .score {
+        display: flex;
+        flex: 0 0 85%;
+        font-size: 20rem;
+        justify-content: center;
+        align-items: center;
+        position: relative;
       }
 
       .number-container {
@@ -68,7 +119,7 @@
       /* Número que se anima */
       .number {
         position: absolute;
-        animation: spin 0.6s forwards;
+        animation: spin 0.9s forwards;
       }
 
       .button-direction {
@@ -129,14 +180,74 @@
           ); /* Desliza el nuevo número hacia la posición original */
         }
       }
+      .actions-left button {
+        font-size: 8rem;
+        border-radius: 10px;
+      }
+
+      .buttons-up {
+        border: 3px solid #fff;
+        background-color: #5a5a5a;
+        color: #fff;
+      }
+
+      .buttons-down {
+        border: 3px solid #fff;
+        background-color: #272727;
+        color: #fff;
+      }
     </style>
   </head>
   <body>
     <div class="container-fluid vh-100">
-      <div class="row h-100">
+      <div class="top-row-scores">
+        <div class="column-left">
+          <div class="score number-container" onclick="changeNumber()">
+            <div class="number" id="number" data-number="9">9</div>
+          </div>
+        </div>
+        <div class="column-right">
+          <div class="score number-container" onclick="changeNumber()">
+            <div class="number" id="number2" data-number="9">9</div>
+          </div>
+        </div>
+      </div>
+      <div class="bottom-row-actions">
+        <div class="actions-left">
+          <div class="container-fluid">
+            <div class="row justify-content-center align-items-start">
+              <div class="col-6 d-flex p-0">
+                <button class="btn btn-primary buttons-up w-100">2</button>
+              </div>
+              <div class="col-6 d-flex p-0">
+                <button class="btn btn-primary buttons-up w-100">3</button>
+              </div>
+              <div class="col-6 d-flex p-0">
+                <button class="btn btn-primary buttons-up w-100">4</button>
+              </div>
+              <div class="col-6 d-flex p-0">
+                <button class="btn btn-primary buttons-up w-100">5</button>
+              </div>
+              <div class="col-6 d-flex p-0">
+                <button class="btn btn-primary buttons-down w-100">0</button>
+              </div>
+              <div class="col-6 d-flex p-0">
+                <button class="btn btn-primary buttons-down text-danger w-100">
+                  -1
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="actions-center"></div>
+        <div class="actions-right"></div>
+      </div>
+      <!-- <div class="row h-100">
         <div class="col-12 p-0 h-100 container">
-          <div class="column-left number-container" onclick="changeNumber()">
-            <div class="score number" id="number" data-number="8">9</div>
+          <div class="column-left">
+            <div class="score number-container" onclick="changeNumber()">
+              <div class="number" id="number" data-number="9">9</div>
+            </div>
             <div class="buttons-score">
               <h2>asdfasdf</h2>
             </div>
@@ -144,7 +255,7 @@
           <div class="column-center"></div>
           <div class="column-right"></div>
         </div>
-      </div>
+      </div> -->
     </div>
 
     <script
@@ -155,18 +266,22 @@
 
     <script>
       function changeNumber() {
-        const numberElement = document.getElementById("number");
-        const currentNumber = parseInt(numberElement.textContent);
-        console.log({ currentNumber });
-        const nextNumber = currentNumber === 9 ? currentNumber + 1 : 0;
+        const numberElement = document.getElementById("number")
+        let currentNumber = parseInt(numberElement.textContent)
+        console.log({ currentNumber })
+        const nextNumber = currentNumber + 1
+        console.log({ nextNumber })
 
         // Cambia el atributo data-number al nuevo valor
-        numberElement.setAttribute("data-number", nextNumber);
+        numberElement.setAttribute("data-number", nextNumber)
+        setTimeout(() => {
+          numberElement.textContent = nextNumber
+        }, 550)
 
         // Reinicia la animación removiendo y añadiendo la clase
-        numberElement.style.animation = "none";
-        numberElement.offsetHeight; /* Fuerza el reflow para reiniciar la animación */
-        numberElement.style.animation = "";
+        numberElement.style.animation = "none"
+        numberElement.offsetHeight /* Fuerza el reflow para reiniciar la animación */
+        numberElement.style.animation = ""
       }
     </script>
   </body>
