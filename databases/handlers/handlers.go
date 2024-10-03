@@ -8,7 +8,7 @@ import (
 )
 
 func ListContacts(db *sql.DB) {
-	query := "SELECT * FROM contact"
+	query := "SELECT * FROM contacts"
 
 	rows, err := db.Query(query)
 	if err != nil {
