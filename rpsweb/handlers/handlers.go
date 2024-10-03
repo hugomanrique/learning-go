@@ -2,11 +2,12 @@ package handlers
 
 import (
 	"fmt"
+	"html/template"
 	"net/http"
 )
 
 func Index(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "Hello World!")
+	template.ParseFiles("intex.html")
 }
 
 func NewGame(w http.ResponseWriter, r *http.Request) {
