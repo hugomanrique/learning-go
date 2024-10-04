@@ -7,7 +7,25 @@ import (
 )
 
 func Index(w http.ResponseWriter, r *http.Request) {
-	template.ParseFiles("intex.html")
+	tpl, err := template.ParseFiles("templates/index.html")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	data := struct {
+		Title   string
+		Message string
+	}{
+		Title:   "Pagina de inicio",
+		Message: "Bienvenido a nuestra pagina de inicio",
+	}
+
+	err = tpl.Execute(w, data)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }
 
 func NewGame(w http.ResponseWriter, r *http.Request) {
