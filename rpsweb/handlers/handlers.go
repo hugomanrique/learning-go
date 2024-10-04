@@ -12,7 +12,16 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	err = tpl.Execute(w, nil)
+
+	data := struct {
+		Title string
+		Message string
+	}{
+		Title: "Pagina de inicio",
+		Message: "Bienvenido a nuestra pagina de inicio",
+	}
+
+	err = tpl.Execute(w, data)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
