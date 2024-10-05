@@ -43,12 +43,31 @@ func Index(w http.ResponseWriter, r *http.Request) {
 
 }
 
+type Player struct {
+	Name string
+}
+
+var player Player
+
 func NewGame(w http.ResponseWriter, r *http.Request) {
 	renderTemplate(w, "new-game.html", nil)
 }
 
 func Game(w http.ResponseWriter, r *http.Request) {
-	renderTemplate(w, "game.html", nil)
+	if r.Method == "POST" {
+		err := r.ParseForm()
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+		player.Name = r.Form.Get("name")
+	}
+
+	if player.Name == "" {
+		renderTemplate(w, "new-game.html", nil)
+		return
+	}
+	renderTemplate(w, "game.html", player)
 }
 
 func Play(w http.ResponseWriter, r *http.Request) {
