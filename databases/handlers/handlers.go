@@ -79,3 +79,7 @@ func DeleteContact(db *sql.DB, id int) {
 	}
 	log.Println("Contact deleted")
 }
+
+func RestarValue() {
+
+}

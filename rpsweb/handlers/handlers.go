@@ -52,6 +52,7 @@ type Player struct {
 var player Player
 
 func NewGame(w http.ResponseWriter, r *http.Request) {
+	restartValue()
 	renderTemplate(w, "new-game.html", nil)
 }
 
@@ -86,4 +87,10 @@ func Play(w http.ResponseWriter, r *http.Request) {
 
 func About(w http.ResponseWriter, r *http.Request) {
 	renderTemplate(w, "about.html", nil)
+}
+
+func restartValue() {
+	player.Name = ""
+	rps.ComputerScore = 0
+	rps.PlayerScore = 0
 }
